@@ -30,4 +30,6 @@ export const Button = styled.button`
   cursor: pointer;
   border-radius: 4px 8px;
   border: 3px solid #f08080;
+  display: flex;
+  align-items: center;
 `;
