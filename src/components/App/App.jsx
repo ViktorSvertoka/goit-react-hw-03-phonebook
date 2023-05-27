@@ -1,23 +1,41 @@
-import React, { Component } from "react";
-import { nanoid } from "nanoid";
-import { Container, Title, SubTitle, Wrapper } from "./App.styled";
-import ContactForm from "../ContactForm/ContactForm";
-import ContactList from "../ContactList/ContactList";
-import Filter from "../Filter/Filter";
+import React, { Component } from 'react';
+import { nanoid } from 'nanoid';
+import { Container, Title, SubTitle, Wrapper } from './App.styled';
+import ContactForm from '../ContactForm/ContactForm';
+import ContactList from '../ContactList/ContactList';
+import Filter from '../Filter/Filter';
 
 class App extends Component {
   state = {
     contacts: [
-      { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
-      { id: "id-2", name: "Hermione Kline", number: "443-89-12" },
-      { id: "id-3", name: "Eden Clements", number: "645-17-79" },
-      { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
+      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
-    filter: "",
+    filter: '',
   };
 
+  // Сохранение контактов в localStorage
+  componentDidMount() {
+    const contacts = localStorage.getItem('contacts'); // Получаем данные из localStorage.
+    const parsedContacts = JSON.parse(contacts); // Преобразуем данные из строки JSON в объект JavaScript.
+
+    if (parsedContacts) {
+      this.setState({ contacts: parsedContacts }); // Устанавливаем полученные контакты в обьект "contacts".
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      // Сравниваем текущие контакты с предыдущим обьектом контактов.
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+      // Если контакты изменились, сохраняем их в localStorage.
+    }
+  }
+
   // Добавление нового контакта в список контактов
-  addContact = (contact) => {
+  addContact = contact => {
     const isInContacts = this.state.contacts.some(
       ({ name }) => name.toLowerCase() === contact.name.toLowerCase()
     );
@@ -26,13 +44,13 @@ class App extends Component {
       alert(`${contact.name} is already in contacts`);
       return;
     }
-    this.setState((prevState) => ({
+    this.setState(prevState => ({
       contacts: [{ id: nanoid(), ...contact }, ...prevState.contacts],
     }));
   };
 
   // Изменение значения фильтра
-  changeFilter = (event) => {
+  changeFilter = event => {
     this.setState({ filter: event.target.value });
   };
 
@@ -41,14 +59,14 @@ class App extends Component {
     const { filter, contacts } = this.state;
     const normalizedFilter = filter.toLowerCase();
 
-    return contacts.filter((contact) =>
+    return contacts.filter(contact =>
       contact.name.toLowerCase().includes(normalizedFilter)
     );
   };
 
   // Удаление контакта из списка
-  removeContact = (contactId) => {
-    this.setState((prevState) => {
+  removeContact = contactId => {
+    this.setState(prevState => {
       return {
         contacts: prevState.contacts.filter(({ id }) => id !== contactId),
       };
