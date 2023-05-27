@@ -1,11 +1,11 @@
-import React from 'react';
-import { nanoid } from 'nanoid';
-import { Form, Label, Button, Input } from './ContactForm.styled';
+import React, { Component } from "react";
+import { nanoid } from "nanoid";
+import { Form, Label, Button, Input } from "./ContactForm.styled";
 
-class ContactForm extends React.Component {
+class ContactForm extends Component {
   state = {
-    name: '',
-    number: '',
+    name: "",
+    number: "",
   };
 
   // Генерация уникальных идентификаторов для полей формы
@@ -13,7 +13,7 @@ class ContactForm extends React.Component {
   numberInputId = nanoid();
 
   // Обработка отправки формы
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
 
     // Вызов функции onSubmit из родительского компонента с передачей объекта контакта
@@ -24,14 +24,14 @@ class ContactForm extends React.Component {
   };
 
   // Обработка изменения значений полей формы
-  handleChange = event => {
+  handleChange = (event) => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   };
 
   // Сброс состояния формы
   reset = () => {
-    this.setState({ number: '', name: '' });
+    this.setState({ number: "", name: "" });
   };
 
   render() {
