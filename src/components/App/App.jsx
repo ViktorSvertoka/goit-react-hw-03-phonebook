@@ -26,7 +26,7 @@ class App extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(_, prevState) {
     if (this.state.contacts !== prevState.contacts) {
       // Сравниваем текущие контакты с предыдущим обьектом контактов.
       localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
