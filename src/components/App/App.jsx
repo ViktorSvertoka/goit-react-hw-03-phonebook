@@ -37,7 +37,8 @@ class App extends Component {
   // Добавление нового контакта в список контактов
   addContact = contact => {
     const isInContacts = this.state.contacts.some(
-      ({ name }) => name.toLowerCase() === contact.name.toLowerCase()
+      ({ name }) =>
+        name.toLowerCase().trim() === contact.name.toLowerCase().trim()
     );
     // Если такой контакт уже существует, то выводим сообщение
     if (isInContacts) {
@@ -51,7 +52,7 @@ class App extends Component {
 
   // Изменение значения фильтра
   changeFilter = event => {
-    this.setState({ filter: event.target.value });
+    this.setState({ filter: event.target.value.trim() });
   };
 
   // Получение отфильтрованных контактов
