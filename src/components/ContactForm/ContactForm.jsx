@@ -18,7 +18,10 @@ class ContactForm extends Component {
     event.preventDefault();
 
     // Вызов функции onSubmit из родительского компонента с передачей объекта контакта
-    this.props.onSubmit({ name: this.state.name, number: this.state.number });
+    this.props.onSubmit({
+      name: this.state.name.trim(),
+      number: this.state.number.trim(),
+    });
 
     // Сброс состояния формы
     this.reset();
